@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MEC Global Support Desk — Proposal for ASI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#14213A;
+    --ink-soft:#5A6680;
+    --paper:#E9EDF2;
+    --surface:#FFFFFF;
+    --line:#CAD3DE;
+    --accent:#1F6FEB;
+    --accent-ink:#0B4DB3;
+    --amber:#E8651C;
+    --amber-ink:#C24E0F;
+    --good:#157F4B;
+    --font-display:'Space Grotesk',system-ui,sans-serif;
+    --font-body:'Inter',system-ui,sans-serif;
+    --font-mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--font-body);
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1080px;margin:0 auto;padding:48px 28px 64px;}
+
+  /* masthead */
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:12px;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--accent-ink);
+    margin:0 0 18px;
+  }
+  h1{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:clamp(30px,4.6vw,52px);
+    line-height:1.04;
+    letter-spacing:-.015em;
+    margin:0 0 18px;
+    max-width:16ch;
+  }
+  .dek{
+    font-size:clamp(15px,1.7vw,18px);
+    color:var(--ink-soft);
+    max-width:60ch;
+    margin:0 0 26px;
+  }
+  .meta{
+    display:flex;flex-wrap:wrap;gap:10px 26px;
+    font-family:var(--font-mono);font-size:12px;
+    color:var(--ink-soft);
+    border-top:1px solid var(--line);
+    padding-top:18px;
+  }
+  .meta b{color:var(--ink);font-weight:500;}
+
+  /* section scaffolding */
+  section{margin-top:46px;}
+  .sec-label{
+    font-family:var(--font-mono);
+    font-size:12px;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--ink-soft);
+    display:flex;align-items:center;gap:12px;
+    margin:0 0 20px;
+  }
+  .sec-label::after{content:"";flex:1;height:1px;background:var(--line);}
+
+  /* diagram card */
+  .diagram-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:26px 22px 16px;
+    box-shadow:0 1px 0 rgba(20,33,58,.04),0 18px 40px -28px rgba(20,33,58,.45);
+  }
+  .diagram-card h2{
+    font-family:var(--font-display);font-weight:600;
+    font-size:18px;margin:0 0 4px;
+  }
+  .diagram-card .sub{font-size:13px;color:var(--ink-soft);margin:0 0 14px;}
+  svg.flow{width:100%;height:auto;display:block;}
+
+  .legend{
+    display:flex;flex-wrap:wrap;gap:8px 22px;
+    font-family:var(--font-mono);font-size:11px;color:var(--ink-soft);
+    margin-top:6px;padding-top:14px;border-top:1px solid var(--line);
+  }
+  .legend span{display:inline-flex;align-items:center;gap:7px;}
+  .dot{width:10px;height:10px;border-radius:50%;display:inline-block;}
+  .dot.blue{background:var(--accent);}
+  .dot.amber{background:var(--amber);}
+
+  /* how it works */
+  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+  .step{
+    background:var(--surface);border:1px solid var(--line);
+    border-radius:12px;padding:18px 16px;
+  }
+  .step .n{
+    font-family:var(--font-mono);font-size:12px;color:var(--accent-ink);
+    letter-spacing:.1em;
+  }
+  .step h3{
+    font-family:var(--font-display);font-weight:600;font-size:15px;
+    margin:10px 0 6px;
+  }
+  .step p{margin:0;font-size:13.5px;color:var(--ink-soft);}
+
+  /* two columns */
+  .cols{display:grid;grid-template-columns:1.15fr .85fr;gap:26px;align-items:start;}
+
+  ul.pros{list-style:none;margin:0;padding:0;}
+  ul.pros li{
+    position:relative;padding:0 0 16px 30px;font-size:14.5px;
+  }
+  ul.pros li::before{
+    content:"";position:absolute;left:4px;top:7px;
+    width:9px;height:9px;border-radius:2px;
+    background:var(--accent);transform:rotate(45deg);
+  }
+  ul.pros li.flag::before{background:var(--amber);}
+  ul.pros li b{font-weight:600;}
+  ul.pros li .digest-tag{
+    display:inline-block;font-family:var(--font-mono);font-size:10.5px;
+    letter-spacing:.08em;text-transform:uppercase;
+    color:var(--amber-ink);border:1px solid var(--amber);
+    border-radius:999px;padding:1px 8px;margin-left:6px;vertical-align:1px;
+  }
+
+  /* cost panel */
+  .cost{
+    background:var(--ink);color:#E7ECF4;border-radius:14px;
+    padding:22px 22px 18px;font-size:13.5px;
+  }
+  .cost h3{
+    font-family:var(--font-mono);font-size:12px;letter-spacing:.16em;
+    text-transform:uppercase;color:#9DB0CF;margin:0 0 16px;font-weight:500;
+  }
+  .line-item{
+    display:flex;justify-content:space-between;gap:14px;
+    padding:11px 0;border-bottom:1px solid rgba(255,255,255,.1);
+  }
+  .line-item .name{color:#E7ECF4;}
+  .line-item .name small{display:block;color:#8FA2C2;font-size:11.5px;font-family:var(--font-mono);margin-top:3px;}
+  .line-item .price{font-family:var(--font-mono);white-space:nowrap;text-align:right;}
+  .line-item.free .price{color:#5FD39A;}
+  .line-item.total{border-bottom:none;padding-top:16px;margin-top:4px;font-size:15px;}
+  .line-item.total .name{font-family:var(--font-display);font-weight:600;}
+  .line-item.total .price{color:#fff;font-weight:500;}
+  .cost .stamp{
+    margin-top:14px;font-family:var(--font-mono);font-size:11px;color:#8FA2C2;
+    display:flex;align-items:center;gap:8px;
+  }
+  .cost .stamp .pill{background:rgba(95,211,154,.16);color:#5FD39A;border-radius:999px;padding:2px 9px;}
+
+  footer{
+    margin-top:42px;padding-top:18px;border-top:1px solid var(--line);
+    font-size:12px;color:var(--ink-soft);
+  }
+  footer p{margin:0 0 6px;}
+
+  /* signal pulse */
+  .pulse{stroke-dasharray:14 360;animation:flow 3.4s linear infinite;}
+  .pulse.amber{animation-delay:1.1s;}
+  @keyframes flow{to{stroke-dashoffset:-374;}}
+  @media (prefers-reduced-motion: reduce){
+    .pulse{animation:none;opacity:0;}
+  }
+
+  @media (max-width:760px){
+    .steps{grid-template-columns:1fr 1fr;}
+    .cols{grid-template-columns:1fr;}
+  }
+  @media (max-width:460px){
+    .steps{grid-template-columns:1fr;}
+    .wrap{padding:34px 18px 50px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <p class="eyebrow">Proposal · MEC Global Support Desk</p>
+    <h1>Every site, one number — and the ticket knows where it came from.</h1>
+    <p class="dek">A WhatsApp-first support desk for the MEC estate. A site lead messages one number; Zoho Desk identifies the location, triages the fault, and hands an agent a ready-to-work ticket — with global oversight built in for Keme.</p>
+    <div class="meta">
+      <span>Prepared for &nbsp;<b>Andy — ASI</b></span>
+      <span>By &nbsp;<b>JH Technical Solutions</b></span>
+      <span>Scope &nbsp;<b>~7 sites · 2–3 agents</b></span>
+    </div>
+  </header>
+
+  <section>
+    <div class="diagram-card">
+      <h2>How a fault becomes a ticket</h2>
+      <p class="sub">The route every report takes — from a lead's phone to a tagged, triaged ticket.</p>
+
+      <svg class="flow" viewBox="0 0 1120 470" role="img" aria-label="Workflow from MEC sites through Zoho Desk to the shared queue and escalation to Keme">
+        <!-- spines (drawn first, tucked behind boxes) -->
+        <path d="M190 180 H805" fill="none" stroke="#C2CEDE" stroke-width="2"/>
+        <path class="pulse" d="M190 180 H805" fill="none" stroke="#1F6FEB" stroke-width="3" stroke-linecap="round"/>
+        <path d="M600 265 V375 H805" fill="none" stroke="#EBC4AC" stroke-width="2"/>
+        <path class="pulse amber" d="M600 265 V375 H805" fill="none" stroke="#E8651C" stroke-width="3" stroke-linecap="round"/>
+
+        <!-- chevrons in gaps -->
+        <g fill="#1F6FEB">
+          <path d="M214 174 l9 6 l-9 6 z"/>
+          <path d="M417 174 l9 6 l-9 6 z"/>
+          <path d="M783 174 l9 6 l-9 6 z"/>
+        </g>
+        <path d="M788 369 l9 6 l-9 6 z" fill="#E8651C"/>
+
+        <!-- BOX 1 · SITES -->
+        <g>
+          <rect x="40" y="118" width="150" height="124" rx="11" fill="#fff" stroke="#14213A" stroke-width="1.5"/>
+          <text x="56" y="146" font-family="IBM Plex Mono,monospace" font-size="11" letter-spacing="1.5" fill="#5A6680">01 · ORIGIN</text>
+          <text x="56" y="172" font-family="Space Grotesk,sans-serif" font-size="18" font-weight="600" fill="#14213A">MEC sites</text>
+          <text x="56" y="196" font-family="Inter,sans-serif" font-size="12" fill="#5A6680">~7 locations.</text>
+          <text x="56" y="214" font-family="Inter,sans-serif" font-size="12" fill="#5A6680">Each lead's number</text>
+          <text x="56" y="230" font-family="Inter,sans-serif" font-size="12" fill="#5A6680">on file.</text>
+        </g>
+
+        <!-- BOX 2 · CHANNELS -->
+        <g>
+          <rect x="235" y="108" width="160" height="144" rx="11" fill="#fff" stroke="#14213A" stroke-width="1.5"/>
+          <text x="251" y="134" font-family="IBM Plex Mono,monospace" font-size="11" letter-spacing="1.5" fill="#5A6680">02 · WAYS IN</text>
+          <rect x="251" y="146" width="128" height="42" rx="8" fill="#EAF1FE" stroke="#1F6FEB" stroke-width="1.2"/>
+          <text x="265" y="166" font-family="Space Grotesk,sans-serif" font-size="13" font-weight="600" fill="#0B4DB3">WhatsApp</text>
+          <text x="265" y="181" font-family="IBM Plex Mono,monospace" font-size="10" fill="#5A6680">main line</text>
+          <rect x="251" y="196" width="128" height="42" rx="8" fill="#F1F3F7" stroke="#CAD3DE" stroke-width="1.2"/>
+          <text x="265" y="216" font-family="Space Grotesk,sans-serif" font-size="13" font-weight="600" fill="#14213A">One email</text>
+          <text x="265" y="231" font-family="IBM Plex Mono,monospace" font-size="10" fill="#5A6680">support@…</text>
+        </g>
+
+        <!-- BOX 3 · DESK CORE -->
+        <g>
+          <rect x="440" y="92" width="320" height="176" rx="13" fill="#fff" stroke="#14213A" stroke-width="1.8"/>
+          <text x="460" y="120" font-family="IBM Plex Mono,monospace" font-size="11" letter-spacing="1.5" fill="#5A6680">03 · ZOHO DESK</text>
+          <text x="460" y="142" font-family="Space Grotesk,sans-serif" font-size="15" font-weight="600" fill="#14213A">Identify → triage → create</text>
+
+          <rect x="458" y="158" width="92" height="92" rx="9" fill="#F7F9FC" stroke="#CAD3DE"/>
+          <text x="471" y="180" font-family="IBM Plex Mono,monospace" font-size="9.5" fill="#0B4DB3">IDENTIFY</text>
+          <text x="471" y="202" font-family="Inter,sans-serif" font-size="11" fill="#14213A">Number</text>
+          <text x="471" y="217" font-family="Inter,sans-serif" font-size="11" fill="#14213A">→ site</text>
+          <text x="471" y="238" font-family="Inter,sans-serif" font-size="10" fill="#5A6680">auto-tagged</text>
+
+          <rect x="558" y="158" width="92" height="92" rx="9" fill="#F7F9FC" stroke="#CAD3DE"/>
+          <text x="571" y="180" font-family="IBM Plex Mono,monospace" font-size="9.5" fill="#0B4DB3">TRIAGE</text>
+          <text x="571" y="202" font-family="Inter,sans-serif" font-size="11" fill="#14213A">Bot asks</text>
+          <text x="571" y="217" font-family="Inter,sans-serif" font-size="11" fill="#14213A">system,</text>
+          <text x="571" y="232" font-family="Inter,sans-serif" font-size="11" fill="#14213A">severity</text>
+
+          <rect x="658" y="158" width="92" height="92" rx="9" fill="#F7F9FC" stroke="#CAD3DE"/>
+          <text x="671" y="180" font-family="IBM Plex Mono,monospace" font-size="9.5" fill="#0B4DB3">CREATE</text>
+          <text x="671" y="202" font-family="Inter,sans-serif" font-size="11" fill="#14213A">Ticket,</text>
+          <text x="671" y="217" font-family="Inter,sans-serif" font-size="11" fill="#14213A">tagged +</text>
+          <text x="671" y="232" font-family="Inter,sans-serif" font-size="11" fill="#14213A">prioritised</text>
+        </g>
+
+        <!-- BOX 4 · QUEUE -->
+        <g>
+          <rect x="805" y="118" width="150" height="124" rx="11" fill="#fff" stroke="#14213A" stroke-width="1.5"/>
+          <text x="821" y="146" font-family="IBM Plex Mono,monospace" font-size="11" letter-spacing="1.5" fill="#5A6680">04 · HANDLE</text>
+          <text x="821" y="172" font-family="Space Grotesk,sans-serif" font-size="18" font-weight="600" fill="#14213A">One queue</text>
+          <text x="821" y="196" font-family="Inter,sans-serif" font-size="12" fill="#5A6680">2–3 agents,</text>
+          <text x="821" y="214" font-family="Inter,sans-serif" font-size="12" fill="#5A6680">all sites,</text>
+          <text x="821" y="230" font-family="Inter,sans-serif" font-size="12" fill="#5A6680">shared view.</text>
+        </g>
+
+        <!-- BOX 5 · ESCALATION -->
+        <g>
+          <rect x="805" y="320" width="150" height="116" rx="11" fill="#FFF7F2" stroke="#E8651C" stroke-width="1.6"/>
+          <text x="821" y="348" font-family="IBM Plex Mono,monospace" font-size="11" letter-spacing="1.5" fill="#C24E0F">⚑ OVERSIGHT</text>
+          <text x="821" y="374" font-family="Space Grotesk,sans-serif" font-size="18" font-weight="600" fill="#14213A">Keme · NYC</text>
+          <text x="821" y="398" font-family="Inter,sans-serif" font-size="12" fill="#5A6680">Alerted every</text>
+          <text x="821" y="416" font-family="Inter,sans-serif" font-size="12" fill="#5A6680">ticket — or a</text>
+          <text x="821" y="432" font-family="Inter,sans-serif" font-size="12" fill="#5A6680">daily digest.</text>
+        </g>
+      </svg>
+
+      <div class="legend">
+        <span><i class="dot blue"></i> Support path — inbound report to handled ticket</span>
+        <span><i class="dot amber"></i> Oversight path — global escalation to Keme</span>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <p class="sec-label">How it works</p>
+    <div class="steps">
+      <div class="step">
+        <span class="n">01</span>
+        <h3>Lead reports a fault</h3>
+        <p>A site lead messages the support WhatsApp number — the channel they already use — or emails the single support address.</p>
+      </div>
+      <div class="step">
+        <span class="n">02</span>
+        <h3>Desk knows the site</h3>
+        <p>The sender's number matches their contact record, so the ticket is tagged to that location automatically. No "which site, which room?"</p>
+      </div>
+      <div class="step">
+        <span class="n">03</span>
+        <h3>Bot triages first</h3>
+        <p>Guided questions capture the system, symptom and severity before an agent is ever involved.</p>
+      </div>
+      <div class="step">
+        <span class="n">04</span>
+        <h3>Routed + Keme alerted</h3>
+        <p>A fully-tagged ticket lands in the shared queue, and Keme is notified in parallel — every time.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <p class="sec-label">Why it works</p>
+    <div class="cols">
+      <ul class="pros">
+        <li><b>Single front door.</b> Leads use the channel they're already on, with one email address as a backup route — no app to learn, no portal to remember.</li>
+        <li><b>Location without asking.</b> The number identifies the site, so every ticket is tagged before a word is typed.</li>
+        <li><b>Triage before a human.</b> Agents open tickets that already say where, what and how bad — faster first response, fewer back-and-forths.</li>
+        <li><b>One queue, scales cleanly.</b> Two or three agents cover the whole estate; the plan allows unlimited agents, so growth adds no per-seat surprises.</li>
+        <li class="flag"><b>Global oversight, your way.</b> Keme is alerted on every ticket with the site in the subject line — or switch to a single daily summary so oversight stays signal, not noise.<span class="digest-tag">Daily digest option</span></li>
+        <li><b>Near-zero messaging cost.</b> Inbound support sits inside WhatsApp's free 24-hour service window; realistic Meta spend is about $0.</li>
+        <li><b>Nothing to host.</b> Runs entirely inside Zoho Desk, and Keme needs no licence to receive alerts.</li>
+      </ul>
+
+      <div class="cost">
+        <h3>Indicative cost · USD</h3>
+        <div class="line-item">
+          <span class="name">Zoho Desk — Standard<small>3 agents · WhatsApp + email</small></span>
+          <span class="price">$42/mo<br>$504/yr</span>
+        </div>
+        <div class="line-item">
+          <span class="name">Zoho Assist — Unattended<small>~36 workstations · unlimited techs</small></span>
+          <span class="price">~$20/mo<br>~$240/yr</span>
+        </div>
+        <div class="line-item free">
+          <span class="name">WhatsApp — Meta messaging<small>service-window support traffic</small></span>
+          <span class="price">≈ $0</span>
+        </div>
+        <div class="line-item total">
+          <span class="name">Indicative total</span>
+          <span class="price">≈ $62/mo · ~$744/yr</span>
+        </div>
+        <div class="stamp"><span class="pill">≈ $0 messaging</span> reactive support stays in the free window</div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>List prices, annual billing, USD. Zoho agent seats are required only for staff who log in and work tickets; Keme's alerts need no licence.</p>
+    <p>Guided Conversations bot sessions are metered separately with a bundled allowance. WhatsApp utility templates sent outside the 24-hour service window are billed per message at low, country-specific rates.</p>
+  </footer>
+
+</div>
+</body>
+</html>
